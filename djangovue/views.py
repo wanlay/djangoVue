@@ -7,6 +7,9 @@ from rest_framework.views import APIView
 
 
 class Login(APIView):
+    """Login view
+    A view of login
+    """
     permission_classes = (AllowAny,)
     def post(self, request, format=None):
         username = request.data.get("username", "")
