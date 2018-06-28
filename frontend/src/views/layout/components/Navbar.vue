@@ -12,7 +12,7 @@
           <el-dropdown-item>主页</el-dropdown-item>
         </router-link>
         <el-dropdown-item divided>
-          <span @click="" style="display:block;">用户信息</span>
+          <span @click="dialogVisible = true" style="display:block;">用户信息</span>
         </el-dropdown-item>
         <el-dropdown-item divided>
           <span @click="logout" style="display:block;">登出</span>

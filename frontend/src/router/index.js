@@ -41,7 +41,7 @@ export const constantRouterMap = [
     path: '/table',
     component: Layout,
     redirect: '/table/yiguandian',
-    name: '发布清单',
+    name: 'tt',
     meta: { title: '发布清单', icon: 'example' },
     children: [
       {
@@ -49,28 +49,9 @@ export const constantRouterMap = [
         name: '翼管店',
         component: () => import('@/views/table/index'),
         meta: { title: '翼管店', icon: 'table' }
-      },
-      {
-        path: '4gfull',
-        name: '4G全量发布',
-        component: () => import('@/views/table/table2'),
-        meta: { title: '4G全量发布', icon: 'table' }
       }
     ]
   },
-
-  // {
-  //   path: '/form',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       name: 'Form',
-  //       component: () => import('@/views/form/index'),
-  //       meta: { title: 'Form', icon: 'form' }
-  //     }
-  //   ]
-  // },
 
   { path: '*', redirect: '/404', hidden: true }
 ]
