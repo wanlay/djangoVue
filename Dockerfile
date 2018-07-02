@@ -2,11 +2,13 @@ FROM wanlay/dev:alpine
 
 COPY . /code
 
+COPY supervisord.conf /etc/supervisord.conf
+
 WORKDIR /code
 
 RUN pip3 install -r requirements.txt
 
-COPY supervisord.conf /etc/supervisord.conf
+RUN cd frontend && npm install
 
 EXPOSE 9000 9528 22
 
