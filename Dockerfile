@@ -2,7 +2,7 @@ FROM wanlay/dev:alpine
 
 COPY . /code
 
-ADD supervisord.conf /etc
+ADD ./supervisord.conf /etc/supervisord.conf
 
 WORKDIR /code
 
