@@ -9,48 +9,48 @@
                  icon="el-icon-edit">创建
       </el-button>
     </div>
-    <el-table :data="list" v-loading.body="listLoading" border fit highlight-current-row style="width: 100%">
-      <el-table-column align="center" label="ID" width="80">
+    <el-table :data="list" v-loading.body="listLoading" border highlight-current-row style="width: 100%">
+      <el-table-column align="center" label="序列"  width="100%">
         <template slot-scope="scope">
           <span>{{scope.row.id}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="版本名称" width="90">
+      <el-table-column align="center" label="用户名" width="100%">
         <template slot-scope="scope">
-          <span>{{scope.row.service_name}}</span>
+          <span>{{scope.row.username}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="版本路径" width="200">
+      <el-table-column align="center" label="最后登录">
         <template slot-scope="scope">
-          <span>{{scope.row.path}}</span>
+          <span>{{scope.row.last_login}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="涉及war包名" width="150">
+      <el-table-column align="center" label="超级用户" width="100%">
         <template slot-scope="scope">
-          <span>{{scope.row.package}}</span>
+          <span>{{scope.row.is_superuser}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="发布机器IP" width="120">
+      <el-table-column align="center" label="邮箱">
         <template slot-scope="scope">
-          <span>{{scope.row.location}}</span>
+          <span>{{scope.row.email}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="版本" width="80">
+      <el-table-column align="center" label="加入时间">
         <template slot-scope="scope">
-          <span>{{scope.row.version}}</span>
+          <span>{{scope.row.date_joined}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="发布日期" width="120">
+      <el-table-column align="center" label="姓" width="100%">
         <template slot-scope="scope">
-          <span>{{scope.row.date}}</span>
+          <span>{{scope.row.first_name}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="发布人" width="100">
+      <el-table-column align="center" label="名" width="100%">
         <template slot-scope="scope">
-          <span>{{scope.row.person}}</span>
+          <span>{{scope.row.last_name}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Actions" width="100">
+      <el-table-column align="center" label="Actions" width="300%">
         <template slot-scope="scope">
           <el-button-group>
             <el-button @click="handleUpdate(scope.row)" type="primary" size="mini" icon="el-icon-edit">编辑</el-button>
@@ -62,54 +62,50 @@
 
     <div class="pagination-container">
       <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
-                     :current-page="listQuery.offset/listQuery.limit+1" :page-sizes="[5,10,20,2,]" :page-size="listQuery.limit"
+                     :current-page="listQuery.page" :page-sizes="[5,10,20,2,]" :page-size="listQuery.page_size"
                      layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form ref="dataForm" :model="temp" label-position="left" label-width="70px"
+      <el-form ref="dataForm" :model="temp" :rules="rules" label-position="left" label-width="90px"
                style='width: 400px; margin-left:50px;'>
-        <el-form-item :label="'ID'" prop="id">
-          <el-input placeholder="不用填写" v-model="temp.id" :disabled="true">
+        <el-form-item :label="'序列'" prop="id">
+          <el-input placeholder="不用填写" v-model="temp.id" disabled="true">
           </el-input>
         </el-form-item>
-        <el-form-item :label="'版本名称'" prop="service_name">
-          <el-input placeholder="Please input" v-model="temp.service_name">
+        <el-form-item :label="'用户名'" prop="username">
+          <el-input placeholder="Please input" v-model="temp.username">
           </el-input>
         </el-form-item>
-        <el-form-item :label="'版本路径'" prop="path">
-          <el-input type="textarea" autosize placeholder="Please input" v-model="temp.path">
+        <el-form-item :label="'最后登录'" prop="last_login">
+          <el-input placeholder="不用填写" v-model="temp.last_login" disabled="true">
           </el-input>
         </el-form-item>
-        <el-form-item :label="'涉及war包名'" prop="package">
-          <el-input type="textarea" autosize placeholder="Please input" v-model="temp.package">
-          </el-input>
-        </el-form-item>
-        <el-form-item :label="'发布机器IP'" prop="location">
-          <el-input placeholder="Please input" v-model="temp.location">
-          </el-input>
-        </el-form-item>
-        <el-form-item :label="'版本'" prop="version">
-          <el-select v-model="temp.version" placeholder="请选择">
+        <el-form-item :label="'超级用户'" prop="is_superuser">
+          <el-select v-model="temp.is_superuser" placeholder="请选择">
             <el-option
-              v-for="item in options"
+            v-for="item in options"
               :key="item.value"
               :label="item.label"
               :value="item.value">
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="'发布日期'" prop="date">
-          <el-date-picker
-            v-model="temp.date"
-            type="date"
-            placeholder="选择时间"
-            value-format="yyyy-MM-dd" >
-          </el-date-picker>
+        <el-form-item :label="'邮箱'" prop="email">
+          <el-input type="email" placeholder="Please input" v-model="temp.email">
+          </el-input>
         </el-form-item>
-        <el-form-item :label="'发布人'" prop="person">
-          <el-input placeholder="Please input" v-model="temp.person">
+        <el-form-item :label="'加入时间'" prop="date_joined">
+          <el-input placeholder="不用填写" v-model="temp.date_joined" disabled="true">
+          </el-input>
+        </el-form-item>
+        <el-form-item :label="'姓'" prop="first_name">
+          <el-input placeholder="Please input" v-model="temp.first_name">
+          </el-input>
+        </el-form-item>
+        <el-form-item :label="'名'" prop="last_name">
+          <el-input placeholder="Please input" v-model="temp.last_name">
           </el-input>
         </el-form-item>
       </el-form>
@@ -133,19 +129,19 @@
         listLoading: true,
         total: null,
         listQuery: {
-          offset: 0,
-          limit: 10,
+          page: 1,
+          page_size: 10,
           search: undefined
         },
         temp: {
           id: '',
-          service_name: '',
-          path: '',
-          package: '',
-          location: '',
-          version: '',
-          date: '',
-          person: ''
+          username: '',
+          last_login: '',
+          is_superuser: '',
+          email: '',
+          date_joined: '',
+          first_name: '',
+          last_name: ''
         },
         // 模态框
         dialogFormVisible: false,
@@ -156,12 +152,25 @@
         },
         // 选择器
         options: [{
-          value: 'A',
-          label: 'A'
+          value: 'true',
+          label: 'true'
         }, {
-          value: 'B',
-          label: 'B'
-        }]
+          value: 'false',
+          label: 'false'
+        }],
+        rules: {
+          username: [
+            { required: true, message: '请输入用户名', trigger: 'blur' },
+            { min: 3, message: '长度最少 3 个字符', trigger: 'blur' }
+          ],
+          is_superuser: [
+            { required: true, message: '请选择是否为超级用户', trigger: 'change' }
+          ],
+          email: [
+            { required: true, message: '请填写邮箱', trigger: 'blur' },
+            { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+          ]
+        }
       }
     },
     created() {
@@ -214,13 +223,13 @@
       },
       resetTemp() {
         this.temp = {
-          service_name: '',
-          path: '',
-          package: '',
-          location: '',
-          version: '',
-          date: '',
-          person: ''
+          username: '',
+          last_login: '',
+          is_superuser: '',
+          email: '',
+          date_joined: '',
+          first_name: '',
+          last_name: ''
         }
       },
       handleCreate() {
@@ -271,11 +280,11 @@
         })
       },
       handleSizeChange(val) {
-        this.listQuery.limit = val
+        this.listQuery.page_size = val
         this.getList()
       },
       handleCurrentChange(val) {
-        this.listQuery.offset = this.listQuery.limit * (val - 1)
+        this.listQuery.page = val
         this.getList()
       }
     }

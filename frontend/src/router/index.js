@@ -40,15 +40,15 @@ export const constantRouterMap = [
   {
     path: '/table',
     component: Layout,
-    redirect: '/table/yiguandian',
+    redirect: '/table/users',
     name: 'tt',
-    meta: { title: '发布清单', icon: 'example' },
+    meta: { title: '用户', icon: 'example' },
     children: [
       {
-        path: 'yiguandian',
-        name: '翼管店',
-        component: () => import('@/views/table/index'),
-        meta: { title: '翼管店', icon: 'table' }
+        path: 'users',
+        name: '用户列表',
+        component: () => import('@/views/table/user'),
+        meta: { title: '用户列表', icon: 'table' }
       }
     ]
   },

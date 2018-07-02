@@ -4,7 +4,7 @@
     <breadcrumb></breadcrumb>
     <el-dropdown class="avatar-container" trigger="click">
       <div class="avatar-wrapper">
-        <img class="user-avatar" :src="avatar+'?imageView2/1/w/80/h/80'">
+        <img class="user-avatar" :src="avatar">
         <i class="el-icon-caret-bottom"></i>
       </div>
       <el-dropdown-menu class="user-dropdown" slot="dropdown">
@@ -19,6 +19,27 @@
         </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
+    <el-dialog
+    title="用户信息"
+    :visible.sync="dialogVisible"
+    width="30%"
+    center>
+      <el-form>
+        <el-form-item>
+            <img class="image" :src="avatar">
+        </el-form-item>
+        <el-form-item label="用户名">
+          <el-input v-model="name" auto-complete="off" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="角色">
+          <el-input v-model="roles" auto-complete="off" disabled>
+          </el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+      <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+     </span>
+    </el-dialog>
   </el-menu>
 </template>
 
@@ -32,10 +53,17 @@ export default {
     Breadcrumb,
     Hamburger
   },
+  data() {
+    return {
+      dialogVisible: false
+    }
+  },
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar'
+      'avatar',
+      'name',
+      'roles'
     ])
   },
   methods: {
@@ -90,6 +118,11 @@ export default {
       }
     }
   }
+}
+.image {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
 }
 </style>
 

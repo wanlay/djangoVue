@@ -13,7 +13,6 @@ const service = axios.create({
 service.interceptors.request.use(config => {
   if (store.getters.token) {
     config.headers['Authorization'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
-    // config.headers['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
   }
   return config
 }, error => {
