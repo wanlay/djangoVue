@@ -10,6 +10,8 @@ RUN pip3 install -r requirements.txt
 
 RUN cd frontend && npm install
 
+VOLUME /code
+
 EXPOSE 9000 9528 22
 
 CMD    ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
