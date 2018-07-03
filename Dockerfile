@@ -12,6 +12,9 @@ RUN cd frontend && npm install
 
 VOLUME /code
 
+# django: 9000
+# vue(frontend): 9528
+# ssh
 EXPOSE 9000 9528 22
 
 CMD    ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
