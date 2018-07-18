@@ -28,6 +28,9 @@ class Login(APIView):
         return Response("用户名或者密码错误", HTTP_400_BAD_REQUEST)
 
 class Info(APIView):
+    """User Info View
+    A view of user info
+    """
     def get(self, request, format=None):
         user = request.user
         if user.is_staff:
@@ -43,6 +46,9 @@ class Info(APIView):
         }, )
 
 class Logout(APIView):
+    """Logout View
+    A view of logout
+    """
     def post(self, request, format=None):
         logout(request)
         return Response({
@@ -50,3 +56,4 @@ class Logout(APIView):
                 "message": "success"
             }
         })
+        

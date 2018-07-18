@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     # myapp
     'api.apps.AppConfig',
 
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [

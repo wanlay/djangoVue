@@ -20,7 +20,7 @@
           <span>{{scope.row.username}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="最后登录">
+      <el-table-column align="center" label="最后登录" width="300%">
         <template slot-scope="scope">
           <span>{{scope.row.last_login}}</span>
         </template>
@@ -30,12 +30,12 @@
           <span>{{scope.row.is_superuser}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="邮箱">
+      <el-table-column align="center" label="邮箱" width="300%">
         <template slot-scope="scope">
           <span>{{scope.row.email}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="加入时间">
+      <el-table-column align="center" label="加入时间" width="300%">
         <template slot-scope="scope">
           <span>{{scope.row.date_joined}}</span>
         </template>
