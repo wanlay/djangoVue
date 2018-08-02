@@ -1,14 +1,13 @@
 from django.urls import path
 from rest_framework import routers
-from rest_framework.schemas import get_schema_view
 
-from api.users import views
-
-schema_view = get_schema_view(title='Pastebin API')
+from api.tasks.views import CrontabViewSet, IntervalViewSet, TaskViewSet
+from api.users.views import UserViewSet
 
 router = routers.SimpleRouter()
-router.register(r"users", views.UserViewSet)
+router.register(r"users", UserViewSet)
+router.register(r"crontab", CrontabViewSet)
+router.register(r"interval", IntervalViewSet)
+router.register(r"task", TaskViewSet)
 
-urlpatterns = [
-    path(r'', schema_view),
-] + router.urls
+urlpatterns = router.urls
