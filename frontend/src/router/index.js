@@ -49,6 +49,12 @@ export const constantRouterMap = [
         name: '用户列表',
         component: () => import('@/views/table/user'),
         meta: { title: '用户列表', icon: 'table' }
+      },
+      {
+        path: 'tasks',
+        name: '任务列表',
+        component: () => import('@/views/table/taskList'),
+        meta: { title: '任务列表', icon: 'eye' }
       }
     ]
   },

@@ -1,54 +1,33 @@
 <template>
+
   <div class="app-container calendar-list-container">
     <el-card shadow="hover">
+      <div slot="header" class="clearfix">
+        <strong>间隔周期</strong>
+      </div>
       <div class="filter-container">
         <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="'输入关键词'"
                   v-model="listQuery.search">
         </el-input>
         <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">搜索</el-button>
         <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary"
-                    icon="el-icon-edit">创建
+                   icon="el-icon-edit">创建
         </el-button>
       </div>
       <el-table :data="list" v-loading.body="listLoading" border highlight-current-row style="width: 100%">
-        <el-table-column align="center" label="序列"  width="100%">
+        <el-table-column align="center" label="序列" width="100%">
           <template slot-scope="scope">
             <span>{{scope.row.id}}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="用户名" width="100%">
+        <el-table-column align="center" label="每">
           <template slot-scope="scope">
-            <span>{{scope.row.username}}</span>
+            <span>{{scope.row.every}}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="最后登录" width="300%">
+        <el-table-column align="center" label="周期">
           <template slot-scope="scope">
-            <span>{{scope.row.last_login}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column align="center" label="超级用户" width="100%">
-          <template slot-scope="scope">
-            <span>{{scope.row.is_superuser}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column align="center" label="邮箱" width="300%">
-          <template slot-scope="scope">
-            <span>{{scope.row.email}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column align="center" label="加入时间" width="300%">
-          <template slot-scope="scope">
-            <span>{{scope.row.date_joined}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column align="center" label="姓" width="100%">
-          <template slot-scope="scope">
-            <span>{{scope.row.first_name}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column align="center" label="名" width="100%">
-          <template slot-scope="scope">
-            <span>{{scope.row.last_name}}</span>
+            <span>{{scope.row.period}}</span>
           </template>
         </el-table-column>
         <el-table-column align="center" label="Actions" width="300%">
@@ -60,31 +39,29 @@
           </template>
         </el-table-column>
       </el-table>
+
+      <div class="pagination-container">
+        <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                       :current-page="listQuery.page" :page-sizes="[5,8,10]" :page-size="listQuery.page_size"
+                       layout="total, sizes, prev, pager, next, jumper" :total="total">
+        </el-pagination>
+      </div>
     </el-card>
-    <div class="pagination-container">
-      <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
-                     :current-page="listQuery.page" :page-sizes="[5,10,20,2,]" :page-size="listQuery.page_size"
-                     layout="total, sizes, prev, pager, next, jumper" :total="total">
-      </el-pagination>
-    </div>
+
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :model="temp" :rules="rules" label-position="left" label-width="90px"
                style='width: 400px; margin-left:50px;'>
-        <el-form-item :label="'序列'" prop="id">
+        <el-form-item :label="序列" prop="id">
           <el-input placeholder="不用填写" v-model="temp.id" disabled="true">
           </el-input>
         </el-form-item>
-        <el-form-item :label="'用户名'" prop="username">
-          <el-input placeholder="Please input" v-model="temp.username">
+        <el-form-item :label="每" prop="every">
+          <el-input type="number" placeholder="Please input" v-model="temp.every">
           </el-input>
         </el-form-item>
-        <el-form-item :label="'最后登录'" prop="last_login">
-          <el-input placeholder="不用填写" v-model="temp.last_login" disabled="true">
-          </el-input>
-        </el-form-item>
-        <el-form-item :label="'超级用户'" prop="is_superuser">
-          <el-select v-model="temp.is_superuser" placeholder="请选择">
+        <el-form-item :label="周期" prop="period">
+          <el-select v-model="temp.period" placeholder="请选择">
             <el-option
             v-for="item in options"
               :key="item.value"
@@ -92,22 +69,6 @@
               :value="item.value">
             </el-option>
           </el-select>
-        </el-form-item>
-        <el-form-item :label="'邮箱'" prop="email">
-          <el-input type="email" placeholder="Please input" v-model="temp.email">
-          </el-input>
-        </el-form-item>
-        <el-form-item :label="'加入时间'" prop="date_joined">
-          <el-input placeholder="不用填写" v-model="temp.date_joined" disabled="true">
-          </el-input>
-        </el-form-item>
-        <el-form-item :label="'姓'" prop="first_name">
-          <el-input placeholder="Please input" v-model="temp.first_name">
-          </el-input>
-        </el-form-item>
-        <el-form-item :label="'名'" prop="last_name">
-          <el-input placeholder="Please input" v-model="temp.last_name">
-          </el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -120,29 +81,25 @@
 </template>
 
 <script>
-  import { fetchList, updateList, createList, deleteList } from '@/api/user'
+  import { fetchList, updateList, createList, deleteList } from '@/api/task'
 
   export default {
-    name: 'user',
+    name: 'cronTask',
     data() {
       return {
+        baseid: 'interval',
         list: null,
         listLoading: true,
         total: null,
         listQuery: {
           page: 1,
-          page_size: 10,
+          page_size: 5,
           search: undefined
         },
         temp: {
           id: '',
-          username: '',
-          last_login: '',
-          is_superuser: '',
-          email: '',
-          date_joined: '',
-          first_name: '',
-          last_name: ''
+          every: '',
+          period: ''
         },
         // 模态框
         dialogFormVisible: false,
@@ -153,25 +110,21 @@
         },
         // 选择器
         options: [{
-          value: 'true',
-          label: 'true'
+          value: 'days',
+          label: '天'
         }, {
-          value: 'false',
-          label: 'false'
-        }],
-        rules: {
-          username: [
-            { required: true, message: '请输入用户名', trigger: 'blur' },
-            { min: 3, message: '长度最少 3 个字符', trigger: 'blur' }
-          ],
-          is_superuser: [
-            { required: true, message: '请选择是否为超级用户', trigger: 'change' }
-          ],
-          email: [
-            { required: true, message: '请填写邮箱', trigger: 'blur' },
-            { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
-          ]
-        }
+          value: 'hours',
+          label: '小时'
+        }, {
+          value: 'minutes',
+          label: '分钟'
+        }, {
+          value: 'seconds',
+          label: '秒'
+        }, {
+          value: 'microseconds',
+          label: '毫秒'
+        }]
       }
     },
     created() {
@@ -180,7 +133,7 @@
     methods: {
       getList() {
         this.listLoading = true
-        fetchList(this.listQuery).then(response => {
+        fetchList(this.listQuery, this.baseid).then(response => {
           this.list = response.results
           this.total = response.count
           this.listLoading = false
@@ -203,7 +156,7 @@
           if (valid) {
             const tempData = Object.assign({}, this.temp)
             console.log(tempData)
-            updateList(tempData, this.temp.id).then(() => {
+            updateList(tempData, this.baseid, this.temp.id).then(() => {
               for (const v of this.list) {
                 if (v.id === this.temp.id) {
                   const index = this.list.indexOf(v)
@@ -224,13 +177,8 @@
       },
       resetTemp() {
         this.temp = {
-          username: '',
-          last_login: '',
-          is_superuser: '',
-          email: '',
-          date_joined: '',
-          first_name: '',
-          last_name: ''
+          every: '',
+          period: ''
         }
       },
       handleCreate() {
@@ -244,7 +192,7 @@
       createData() {
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
-            createList(this.temp).then(() => {
+            createList(this.temp, this.baseid).then(() => {
               this.list.unshift(this.temp)
               this.dialogFormVisible = false
               this.$notify({
@@ -264,7 +212,7 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          deleteList(row.id).then(() => {
+          deleteList(this.baseid, row.id).then(() => {
             this.$notify({
               title: '成功',
               message: '删除成功',
