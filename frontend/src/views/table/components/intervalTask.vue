@@ -30,7 +30,7 @@
             <span>{{scope.row.period}}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="Actions" width="300%">
+        <el-table-column align="center" label="操作" width="300%">
           <template slot-scope="scope">
             <el-button-group>
               <el-button @click="handleUpdate(scope.row)" type="primary" size="mini" icon="el-icon-edit">编辑</el-button>
@@ -52,15 +52,15 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :model="temp" :rules="rules" label-position="left" label-width="90px"
                style='width: 400px; margin-left:50px;'>
-        <el-form-item :label="序列" prop="id">
+        <el-form-item :label="'序列'" prop="id">
           <el-input placeholder="不用填写" v-model="temp.id" disabled="true">
           </el-input>
         </el-form-item>
-        <el-form-item :label="每" prop="every">
+        <el-form-item :label="'每'" prop="every">
           <el-input type="number" placeholder="Please input" v-model="temp.every">
           </el-input>
         </el-form-item>
-        <el-form-item :label="周期" prop="period">
+        <el-form-item :label="'周期'" prop="period">
           <el-select v-model="temp.period" placeholder="请选择">
             <el-option
             v-for="item in options"
@@ -84,7 +84,7 @@
   import { fetchList, updateList, createList, deleteList } from '@/api/task'
 
   export default {
-    name: 'cronTask',
+    name: 'intervalTask',
     data() {
       return {
         baseid: 'interval',
@@ -124,7 +124,9 @@
         }, {
           value: 'microseconds',
           label: '毫秒'
-        }]
+        }],
+        rules: {
+        }
       }
     },
     created() {

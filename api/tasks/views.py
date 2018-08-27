@@ -1,9 +1,13 @@
+from itertools import chain
 from django_celery_beat.models import CrontabSchedule, IntervalSchedule, PeriodicTask
-from django_celery_results.models import TaskResult
 from rest_framework import viewsets, filters
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
-from api.tasks.serializers import CrontabSerializer, IntervalSerializer, TaskSerializer, TaskResultSerializer
+from api.tasks.serializers import CrontabSerializer, IntervalSerializer, TaskSerializer
+from djangovue.celery import app
+from celery import shared_task
 
 
 class CrontabViewSet(viewsets.ModelViewSet):
@@ -38,14 +42,20 @@ class TaskViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.SearchFilter,)
     search_fields = ('id', )
 
+@shared_task
+def add(x, y):
+    return x + y
 
-class TaskResultViewSet(viewsets.ModelViewSet):
-    """
-    CURD of TaskResult
-    """
-    permission_classes = (IsAuthenticated,)
-    queryset = TaskResult.objects.all()
-    serializer_class = TaskResultSerializer
-    filter_backends = (filters.SearchFilter,)
-    search_fields = ('id', )
 
+class TaskList(APIView):
+    """
+    获取任务列表
+    """
+    def get(self, request, *args, **kwargs):
+        i = app.control.inspect().registered_tasks()
+        if i :
+            reg_tasks = set(chain.from_iterable(i.values()))
+            # reg_tasks = list(sorted(name for name in current_app.tasks if not name.startswith('celery.')))
+            return Response(reg_tasks)
+        else:
+            return Response("")

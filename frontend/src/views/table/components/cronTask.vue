@@ -45,7 +45,7 @@
             <span>{{scope.row.month_of_year}}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="Actions" width="300%">
+        <el-table-column align="center" label="操作" width="300%">
           <template slot-scope="scope">
             <el-button-group>
               <el-button @click="handleUpdate(scope.row)" type="primary" size="mini" icon="el-icon-edit">编辑</el-button>
@@ -67,27 +67,27 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :model="temp" :rules="rules" label-position="left" label-width="90px"
                style='width: 400px; margin-left:50px;'>
-        <el-form-item :label="序列" prop="id">
+        <el-form-item :label="'序列'" prop="id">
           <el-input placeholder="不用填写" v-model="temp.id" disabled="true">
           </el-input>
         </el-form-item>
-        <el-form-item :label="分" prop="minute">
+        <el-form-item :label="'分'" prop="minute">
           <el-input placeholder="Please input" v-model="temp.minute">
           </el-input>
         </el-form-item>
-        <el-form-item :label="时" prop="hour">
+        <el-form-item :label="'时'" prop="hour">
           <el-input placeholder="Please input" v-model="temp.hour">
           </el-input>
         </el-form-item>
-        <el-form-item :label="周" prop="day_of_week">
+        <el-form-item :label="'周'" prop="day_of_week">
           <el-input placeholder="Please input" v-model="temp.day_of_week">
           </el-input>
         </el-form-item>
-        <el-form-item :label="月" prop="day_of_month">
+        <el-form-item :label="'月'" prop="day_of_month">
           <el-input placeholder="Please input" v-model="temp.day_of_month">
           </el-input>
         </el-form-item>
-        <el-form-item :label="年" prop="month_of_year">
+        <el-form-item :label="'年'" prop="month_of_year">
           <el-input placeholder="Please input" v-model="temp.month_of_year">
           </el-input>
         </el-form-item>
@@ -131,6 +131,8 @@
         textMap: {
           update: 'Edit',
           create: 'Create'
+        },
+        rules: {
         }
       }
     },

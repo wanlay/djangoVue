@@ -1,6 +1,5 @@
 Django>=2
 djangorestframework>=3.8
 celery
-django-celery-results
 django-celery-beat
-sqlalchemy
+redis

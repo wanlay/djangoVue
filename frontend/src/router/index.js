@@ -38,20 +38,30 @@ export const constantRouterMap = [
   },
 
   {
-    path: '/table',
+    path: '/users',
     component: Layout,
-    redirect: '/table/users',
-    name: 'tt',
-    meta: { title: '用户', icon: 'example' },
+    redirect: '/users/userList',
+    name: 'user',
+    meta: { title: '用户管理', icon: 'example' },
     children: [
       {
-        path: 'users',
+        path: 'userList',
         name: '用户列表',
         component: () => import('@/views/table/user'),
         meta: { title: '用户列表', icon: 'table' }
-      },
+      }
+    ]
+  },
+
+  {
+    path: '/tasks',
+    component: Layout,
+    redirect: '/tasks/taskList',
+    name: 'task',
+    meta: { title: '任务管理', icon: 'eye' },
+    children: [
       {
-        path: 'tasks',
+        path: 'taskList',
         name: '任务列表',
         component: () => import('@/views/table/taskList'),
         meta: { title: '任务列表', icon: 'eye' }

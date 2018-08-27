@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function fetchList(query) {
   return request({
-    url: '/api/users/',
+    url: '/api/users',
     method: 'get',
     params: query
   })
@@ -18,7 +18,7 @@ export function updateList(data, pk) {
 
 export function createList(data) {
   return request({
-    url: '/api/users/',
+    url: '/api/users',
     method: 'post',
     data: data
   })

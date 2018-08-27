@@ -29,12 +29,12 @@ ALLOWED_HOSTS = ['*']
 
 # Celery settings
 
-CELERY_BROKER_URL = 'amqp://guest:guest@localhost//'
+CELERY_BROKER_URL = 'redis://localhost:6379/1'
 
 #: Only add pickle to this list if your broker is secured
 #: from unwanted access (see userguide/security.html)
 CELERY_ACCEPT_CONTENT = ['json']
-CELERY_RESULT_BACKEND = 'db+sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+# CELERY_RESULT_BACKEND = 'db+sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Asia/Shanghai'
 
@@ -54,7 +54,6 @@ INSTALLED_APPS = [
     'api.apps.AppConfig',
     # celery
     'django_celery_beat',
-    'django_celery_results',
 
     'rest_framework.authtoken',
 ]

@@ -11,47 +11,47 @@
         </el-button>
       </div>
       <el-table :data="list" v-loading.body="listLoading" border highlight-current-row style="width: 100%">
-        <el-table-column align="center" label="序列"  width="100%">
+        <el-table-column align="center" label="序列" width="100%">
           <template slot-scope="scope">
             <span>{{scope.row.id}}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="用户名" width="100%">
+        <el-table-column align="center" label="用户名">
           <template slot-scope="scope">
             <span>{{scope.row.username}}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="最后登录" width="300%">
+        <el-table-column align="center" label="最后登录">
           <template slot-scope="scope">
             <span>{{scope.row.last_login}}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="超级用户" width="100%">
+        <el-table-column align="center" label="超级用户">
           <template slot-scope="scope">
             <span>{{scope.row.is_superuser}}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="邮箱" width="300%">
+        <el-table-column align="center" label="邮箱">
           <template slot-scope="scope">
             <span>{{scope.row.email}}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="加入时间" width="300%">
+        <el-table-column align="center" label="加入时间">
           <template slot-scope="scope">
             <span>{{scope.row.date_joined}}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="姓" width="100%">
+        <el-table-column align="center" label="姓">
           <template slot-scope="scope">
             <span>{{scope.row.first_name}}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="名" width="100%">
+        <el-table-column align="center" label="名">
           <template slot-scope="scope">
             <span>{{scope.row.last_name}}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="Actions" width="300%">
+        <el-table-column align="center" label="Actions">
           <template slot-scope="scope">
             <el-button-group>
               <el-button @click="handleUpdate(scope.row)" type="primary" size="mini" icon="el-icon-edit">编辑</el-button>
